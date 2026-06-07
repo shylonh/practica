@@ -416,3 +416,79 @@ GO
 INSERT INTO Tratamientos (NombreTratamiento, Descripcion, Costo, PacienteID) 
 VALUES ('Fisioterapia Post-Operatoria', 'ESTADO: FINALIZADO. Alta médica otorgada.', 450.00, 4);
 GO
+
+-- 66. Actualizar teléfono de un paciente.
+UPDATE Pacientes 
+SET Telefono = '+505 7777-8888' 
+WHERE PacienteID = 1;
+
+-- 67. Actualizar dirección de un paciente.
+UPDATE Pacientes 
+SET Direccion = 'Bello Horizonte, De la rotonda 2c al norte' 
+WHERE PacienteID = 2;
+
+-- 68. Actualizar salario de un médico.
+UPDATE Medicos 
+SET Salario = 4950.00 
+WHERE MedicoID = 1;
+
+-- 69. Actualizar turno de un médico.
+UPDATE Medicos 
+SET Turno = 'Noche' 
+WHERE MedicoID = 2;
+
+-- 70. Cambiar estado de una cita.
+UPDATE Citas 
+SET Estado = 'Cancelada' 
+WHERE CitaID = 7;
+
+-- 71. Actualizar costo de consulta.
+UPDATE Citas 
+SET CostoConsulta = 85.00 
+WHERE CitaID = 11;
+
+-- 72. Actualizar nombre de especialidad.
+UPDATE Especialidades 
+SET NombreEspecialidad = 'Pediatría Neonatal' 
+WHERE EspecialidadID = 2;
+
+-- 73. Actualizar disponibilidad de habitación.
+UPDATE Habitaciones 
+SET Disponibilidad = 0 
+WHERE HabitacionID = 1;
+
+-- 74. Actualizar tratamiento activo.
+UPDATE Tratamientos 
+SET Descripcion = 'ESTADO: ACTIVO. Se duplica la dosis por recomendación médica.' 
+WHERE TratamientoID = 1;
+
+-- 75. Actualizar medicamento.
+UPDATE Medicamentos 
+SET CantidadStock = 480 
+WHERE MedicamentoID = 1;
+
+-- 76. Actualizar correo de paciente.
+UPDATE Pacientes 
+SET Correo = 'juan.perez.nuevo@mail.com' 
+WHERE PacienteID = 1;
+
+-- 77. Actualizar correo de médico.
+UPDATE Medicos 
+SET Correo = 'carlos.mendoza.update@hospital.com' 
+WHERE MedicoID = 1;
+
+-- 78. Actualizar fecha de cita.
+UPDATE Citas 
+SET FechaHora = '2026-06-20 14:30:00' 
+WHERE CitaID = 8;
+
+-- 79. Actualizar experiencia del médico.
+UPDATE Medicos 
+SET Experiencia = 14 
+WHERE MedicoID = 1;
+
+-- 80. Actualizar tipo de sangre.
+UPDATE Pacientes 
+SET TipoSangre = 'O-' 
+WHERE PacienteID = 3;
+GO

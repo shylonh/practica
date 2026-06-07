@@ -492,3 +492,57 @@ UPDATE Pacientes
 SET TipoSangre = 'O-' 
 WHERE PacienteID = 3;
 GO
+
+-- 81. Eliminar un paciente específico.
+DELETE FROM Pacientes 
+WHERE PacienteID = 20;
+
+
+-- 82. Eliminar una cita.
+DELETE FROM Citas 
+WHERE CitaID = 15;
+
+
+-- 83. Eliminar un medicamento.
+DELETE FROM Medicamentos 
+WHERE MedicamentoID = 20;
+
+
+-- 84. Eliminar una habitación.
+DELETE FROM Habitaciones 
+WHERE HabitacionID = 10;
+
+
+-- 85. Eliminar un tratamiento.
+DELETE FROM Tratamientos 
+WHERE TratamientoID = 10;
+
+
+-- 86. Eliminar citas canceladas.
+DELETE FROM Citas 
+WHERE Estado = 'Cancelada';
+
+
+-- 87. Eliminar pacientes sin citas.
+DELETE FROM Pacientes 
+WHERE PacienteID NOT IN (
+    SELECT DISTINCT PacienteID 
+    FROM Citas 
+    WHERE PacienteID IS NOT NULL
+);
+
+
+-- 88. Eliminar habitaciones vacías.
+DELETE FROM Habitaciones 
+WHERE Estado = 'Disponible' OR PacienteID IS NULL;
+
+
+-- 89. Eliminar medicamentos vencidos.
+DELETE FROM Medicamentos 
+WHERE Presentacion = 'Vencido'; 
+
+
+-- 90. Eliminar registros de prueba.
+DELETE FROM Tratamientos 
+WHERE NombreTratamiento LIKE '%prueba%' OR Descripcion LIKE '%prueba%';
+GO

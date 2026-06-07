@@ -253,12 +253,166 @@ GO
 
 -- 50. Eliminar una base de datos de pruebas.
 
-USE master; -- Nos cambiamos a la base de datos del sistema
+USE master; 
 GO
-CREATE DATABASE BaseDeDatosPruebas; -- Creamos la BD de prueba
+CREATE DATABASE BaseDeDatosPruebas; 
 GO
-DROP DATABASE BaseDeDatosPruebas; -- La eliminamos por completo
+DROP DATABASE BaseDeDatosPruebas; 
 GO
 
 USE HospitalDB;
+GO
+
+-- 51. Insertar 5 especialidades médicas.
+INSERT INTO Especialidades (NombreEspecialidad, Descripcion) VALUES
+('Cardiología', 'Tratamiento de afecciones del corazón y sistema circulatorio.'),
+('Pediatría', 'Atención médica para bebés, niños y adolescentes.'),
+('Dermatología', 'Diagnóstico y tratamiento de enfermedades de la piel.'),
+('Ginecología', 'Cuidado de la salud del sistema reproductor femenino.'),
+('Traumatología', 'Tratamiento de lesiones óseas, musculares y articulares.');
+GO
+
+-- 52. Insertar 10 médicos.
+
+INSERT INTO Medicos (Nombre, Apellido, Correo, Salario, EspecialidadID) VALUES
+('Carlos', 'Mendoza', 'carlos.mendoza@hospital.com', 4500.00, 1),
+('Elena', 'Rostova', 'elena.rostova@hospital.com', 4200.00, 2),
+('Jorge', 'Ramírez', 'jorge.ramirez@hospital.com', 4800.00, 3),
+('Ana', 'Martínez', 'ana.martinez@hospital.com', 4600.00, 4),
+('Luis', 'Gómez', 'luis.gomez@hospital.com', 5000.00, 5),
+('Sofía', 'Castro', 'sofia.castro@hospital.com', 4300.00, 1),
+('Miguel', 'Sanz', 'miguel.sanz@hospital.com', 4100.00, 2),
+('Lucía', 'Fernández', 'lucia.fernandez@hospital.com', 4700.00, 3),
+('Andrés', 'Peña', 'andres.pena@hospital.com', 4900.00, 4),
+('Laura', 'Vargas', 'laura.vargas@hospital.com', 5200.00, 5);
+GO
+
+-- 53. Insertar 20 pacientes.
+INSERT INTO Pacientes (Nombre, Apellido, FechaNacimiento, Correo, Edad) VALUES
+('Juan', 'Pérez', '1990-05-12', 'juan.perez@mail.com', 36),
+('María', 'López', '1985-08-22', 'maria.lopez@mail.com', 40),
+('Pedro', 'García', '2000-01-15', 'pedro.garcia@mail.com', 26),
+('Carmen', 'Sánchez', '1973-11-30', 'carmen.sanchez@mail.com', 52),
+('Alejandro', 'Torres', '1995-03-09', 'alejandro.torres@mail.com', 31),
+('Rosa', 'Díaz', '1968-07-19', 'rosa.diaz@mail.com', 57),
+('David', 'Ruiz', '2010-04-25', 'david.ruiz@mail.com', 16),
+('Martha', 'Morales', '1955-12-05', 'martha.morales@mail.com', 70),
+('Javier', 'Jiménez', '1988-02-14', 'javier.jimenez@mail.com', 38),
+('Patricia', 'Alvarado', '1992-10-10', 'patricia.alvarado@mail.com', 33),
+('Diego', 'Espinoza', '2005-06-18', 'diego.espinoza@mail.com', 20),
+('Elizabeth', 'Flores', '1980-09-01', 'elizabeth.flores@mail.com', 45),
+('Ricardo', 'Benítez', '1977-05-28', 'ricardo.benitez@mail.com', 49),
+('Silvia', 'Ortiz', '1999-08-14', 'silvia.ortiz@mail.com', 26),
+('Fernando', 'Herrera', '1963-03-21', 'fernando.herrera@mail.com', 63),
+('Beatriz', 'Gutiérrez', '1984-11-11', 'beatriz.gutierrez@mail.com', 41),
+('Hugo', 'Castro', '2015-01-30', 'hugo.castro@mail.com', 11),
+('Yolanda', 'Marín', '1970-07-07', 'yolanda.marin@mail.com', 55),
+('Gabriel', 'Ríos', '1993-04-03', 'gabriel.rios@mail.com', 33),
+('Natalia', 'Vega', '2002-12-25', 'natalia.vega@mail.com', 23);
+GO
+
+-- 54. Insertar 15 citas.
+INSERT INTO Citas (FechaHora, PacienteID, MedicoID, Motivo, Estado) VALUES
+('2026-06-01 09:00:00', 1, 1, 'Control cardiológico de rutina', 'Completada'),
+('2026-06-01 10:30:00', 2, 2, 'Chequeo pediátrico anual', 'Completada'),
+('2026-06-02 08:00:00', 3, 3, 'Consulta por dermatitis', 'Completada'),
+('2026-06-02 11:15:00', 4, 4, 'Control ginecológico', 'Completada'),
+('2026-06-03 14:00:00', 5, 5, 'Evaluación de fractura de esguince', 'Completada'),
+('2026-06-03 16:00:00', 6, 1, 'Arritmia menor', 'Completada'),
+('2026-06-04 09:30:00', 7, 2, 'Fiebre persistente', 'Programada'),
+('2026-06-04 11:00:00', 8, 3, 'Revisión de lunares', 'Programada'),
+('2026-06-05 08:30:00', 9, 4, 'Ecografía de control', 'Programada'),
+('2026-06-05 10:00:00', 10, 5, 'Dolor crónico de rodilla', 'Programada'),
+('2026-06-06 09:00:00', 11, 6, 'Presión arterial alta', 'Programada'),
+('2026-06-06 12:00:00', 12, 7, 'Vacunación obligatoria', 'Programada'),
+('2026-06-07 15:00:00', 13, 8, 'Alergias cutáneas', 'Programada'),
+('2026-06-07 16:30:00', 14, 9, 'Consulta general preventiva', 'Programada'),
+('2026-06-08 11:00:00', 15, 10, 'Dolor lumbar severo', 'Programada');
+GO
+
+-- 55. Insertar 10 habitaciones.
+INSERT INTO Habitaciones (NumeroHabitacion, Tipo, Estado) VALUES
+('101', 'Individual', 'Disponible'),
+('102', 'Doble', 'Ocupada'),
+('103', 'UCI', 'Ocupada'),
+('104', 'Individual', 'Disponible'),
+('105', 'Doble', 'Disponible'),
+('201', 'Individual', 'Ocupada'),
+('202', 'Doble', 'Disponible'),
+('203', 'UCI', 'Disponible'),
+('204', 'Individual', 'Ocupada'),
+('205', 'Doble', 'Disponible');
+GO
+
+-- 56. Insertar 10 tratamientos.
+INSERT INTO Tratamientos (NombreTratamiento, Descripcion, Costo, PacienteID) VALUES
+('Hipertensión Etapa 1', 'Tratamiento con betabloqueadores y dieta baja en sodio.', 150.00, 1),
+('Terapia Respiratoria', 'Uso de nebulizaciones por cuadro asmático severo.', 220.00, 7),
+('Cuidado Post-Fractura', 'Inmovilización con yeso y analgésicos.', 350.00, 5),
+('Tratamiento de Acné Severo', 'Aplicación tópica y antibióticos orales.', 180.00, 3),
+('Control Diabético', 'Suministro de insulina y monitoreo de glucosa.', 400.00, 8),
+('Rehabilitación Lumbar', 'Sesiones de fisioterapia dirigidas.', 300.00, 15),
+('Tratamiento de Anemia', 'Suplementación de hierro endovenoso.', 125.00, 4),
+('Antibióticoterapia UCI', 'Administración de antibióticos de amplio espectro.', 950.00, 11),
+('Monitoreo Cardíaco', 'Uso de Holter por 24 horas y análisis.', 210.00, 6),
+('Manejo del Dolor Crónico', 'Bloqueo terapéutico del dolor articular.', 600.00, 10);
+GO
+
+-- 57. Insertar 20 medicamentos.
+INSERT INTO Medicamentos (NombreMedicamento, Presentacion, CantidadStock, TratamientoID) VALUES
+('Losartán 50mg', 'Tableta', 500, 1),
+('Amoxicilina 500mg', 'Cápsula', 300, 2),
+('Ibuprofeno 400mg', 'Tableta', 1000, 3),
+('Metformina 850mg', 'Tableta', 600, 5),
+('Paracetamol 500mg', 'Tableta', 1500, 3),
+('Salbutamol Inhalador', 'Aerosol', 150, 2),
+('Insulina Glargina', 'Vial', 80, 5),
+('Omeprazol 20mg', 'Cápsula', 800, 1),
+('Diclofenaco Sódico', 'Ampolla', 200, 6),
+('Hierro Aminoquelado', 'Tableta', 400, 7),
+('Ceftriaxona 1g', 'Ampolla', 120, 8),
+('Atorvastatina 20mg', 'Tableta', 450, 1),
+('Clonazepam 2mg', 'Tableta', 250, 10),
+('Tramadol 50mg', 'Cápsula', 350, 10),
+('Lorandil 10mg', 'Tableta', 500, 4),
+('Fluconazol 150mg', 'Cápsula', 180, 4),
+('Ketorolaco 30mg', 'Ampolla', 150, 6),
+('Complejo B', 'Tableta', 900, 7),
+('Vancomicina 500mg', 'Vial', 90, 8),
+('Enalapril 10mg', 'Tableta', 400, 9);
+GO
+
+-- 58. Insertar pacientes con todos los campos.
+INSERT INTO Pacientes (Nombre, Apellido, FechaNacimiento, Telefono, Direccion, Correo, Edad, Genero, TipoSangre) 
+VALUES ('Roberto', 'Gómez', '1982-04-14', '+505 8888-7777', 'Calle Central 123', 'roberto.gomez@mail.com', 44, 'M', 'O+');
+GO
+
+-- 59. Insertar médicos especialistas.
+INSERT INTO Medicos (Nombre, Apellido, Correo, Salario, EspecialidadID, Turno, Experiencia) 
+VALUES ('Francisco', 'Dávila', 'francisco.davila@hospital.com', 5500.00, 1, 'Mañana', 12); -- Especialidad 1 = Cardiología
+GO
+
+-- 60. Insertar citas con fecha actual.
+INSERT INTO Citas (FechaHora, PacienteID, MedicoID, Motivo, Estado) 
+VALUES (GETDATE(), 1, 1, 'Consulta de urgencia inmediata', 'En Progreso');
+GO
+
+-- 62. Insertar habitaciones ocupadas.
+INSERT INTO Habitaciones (NumeroHabitacion, Tipo, Estado) 
+VALUES ('301', 'UCI', 'Ocupada');
+GO
+
+-- 63. Insertar habitaciones disponibles.
+INSERT INTO Habitaciones (NumeroHabitacion, Tipo, Estado) 
+VALUES ('302', 'Individual', 'Disponible');
+GO
+
+-- 64. Insertar tratamientos activos.
+INSERT INTO Tratamientos (NombreTratamiento, Descripcion, Costo, PacienteID) 
+VALUES ('Quimioterapia Ciclo 1', 'ESTADO: ACTIVO. Sesiones semanales vigentes.', 2500.00, 3);
+GO
+
+-- 65. Insertar tratamientos finalizados.
+INSERT INTO Tratamientos (NombreTratamiento, Descripcion, Costo, PacienteID) 
+VALUES ('Fisioterapia Post-Operatoria', 'ESTADO: FINALIZADO. Alta médica otorgada.', 450.00, 4);
 GO

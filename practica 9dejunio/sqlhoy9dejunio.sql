@@ -90,3 +90,84 @@ CREATE TABLE TEmpleadoProyecto (
         FOREIGN KEY (nProyectoID) REFERENCES TProyecto(nProyectoID)
 );
 GO
+
+-- 16. Agregar columna cEmail a TEmpleado.
+ALTER TABLE TEmpleado 
+ADD cEmail VARCHAR(150);
+GO
+
+-- 17. Agregar columna cTelefono.
+-- (Le asignamos temporalmente un tamaño menor para luego modificarlo en el paso 26)
+ALTER TABLE TEmpleado 
+ADD cTelefono VARCHAR(15);
+GO
+
+-- 18. Modificar longitud de cNombre a 100 caracteres.
+ALTER TABLE TEmpleado 
+ALTER COLUMN cNombre VARCHAR(100);
+GO
+
+-- 19. Modificar longitud de cApellido a 100 caracteres.
+ALTER TABLE TEmpleado 
+ALTER COLUMN cApellido VARCHAR(100);
+GO
+
+-- 20. Agregar columna cDireccion.
+ALTER TABLE TEmpleado 
+ADD cDireccion VARCHAR(250);
+GO
+
+-- 21. Agregar columna nEdad.
+ALTER TABLE TEmpleado 
+ADD nEdad INT;
+GO
+
+-- 22. Crear restricción CHECK para edades entre 18 y 65 años.
+ALTER TABLE TEmpleado 
+ADD CONSTRAINT CHK_Edad CHECK (nEdad BETWEEN 18 AND 65);
+GO
+
+-- 23. Agregar restricción UNIQUE al correo electrónico.
+ALTER TABLE TEmpleado 
+ADD CONSTRAINT UQ_Email UNIQUE (cEmail);
+GO
+
+-- 24. Agregar columna bActivo tipo BIT con valor por defecto 1.
+-- En SQL Server, es buena práctica nombrar la restricción DEFAULT (DEF_Activo).
+ALTER TABLE TEmpleado 
+ADD bActivo BIT CONSTRAINT DEF_Activo DEFAULT 1;
+GO
+
+-- 25. Eliminar la columna cDireccion.
+ALTER TABLE TEmpleado 
+DROP COLUMN cDireccion;
+GO
+
+-- 26. Cambiar el tipo de dato de teléfono a VARCHAR(20).
+ALTER TABLE TEmpleado 
+ALTER COLUMN cTelefono VARCHAR(20);
+GO
+
+-- 27. Agregar columna cGenero.
+-- Usamos CHAR(1) ya que solo almacenará un carácter ('M' o 'F').
+ALTER TABLE TEmpleado 
+ADD cGenero CHAR(1);
+GO
+
+-- 28. Agregar restricción CHECK para que el género solo permita M o F.
+ALTER TABLE TEmpleado 
+ADD CONSTRAINT CHK_Genero CHECK (cGenero IN ('M', 'F'));
+GO
+
+-- 29. Agregar columna dFechaNacimiento.
+ALTER TABLE TEmpleado 
+ADD dFechaNacimiento DATE;
+GO
+
+-- 30. Crear una nueva tabla llamada TSucursal.
+-- Como el ejercicio no especifica las columnas, creamos una estructura básica lógica.
+CREATE TABLE TSucursal (
+    nSucursalID INT IDENTITY(1,1) PRIMARY KEY,
+    cNombreSucursal VARCHAR(100) NOT NULL
+);
+GO

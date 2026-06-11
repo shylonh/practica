@@ -314,3 +314,32 @@ GO
 INSERT INTO TEmpleadoProyecto (nEmpleadoID, nProyectoID) 
 VALUES (1, 3);
 GO
+
+-- 49. Eliminar un empleado específico mediante su NIF.
+DELETE FROM TEmpleado 
+WHERE cNIF = '12345678X';
+GO
+
+-- 50. Eliminar todos los empleados inactivos.
+DELETE FROM TEmpleado 
+WHERE bActivo = 0;
+GO
+
+-- 51. Eliminar un proyecto específico.
+DELETE FROM TProyecto 
+WHERE nProyectoID = 4;
+GO
+
+-- 52. Eliminar las asignaciones de un empleado en la tabla TEmpleadoProyecto.
+DELETE FROM TEmpleadoProyecto 
+WHERE nEmpleadoID = 2;
+GO
+
+-- 53. Eliminar un departamento que no tenga empleados asociados.
+DELETE FROM TDepartamento 
+WHERE nDepartamentoID NOT IN (
+    SELECT DISTINCT nDepartamentoID 
+    FROM TEmpleado 
+    WHERE nDepartamentoID IS NOT NULL
+);
+GO

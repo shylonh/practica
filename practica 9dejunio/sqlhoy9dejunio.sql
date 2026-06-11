@@ -493,3 +493,115 @@ GO
 ALTER DATABASE EmpresaSQL SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 DROP DATABASE EmpresaSQL;
 GO
+-- 81. Crear una tabla TCliente con al menos 8 campos y restricciones.
+CREATE TABLE TCliente (
+    nClienteID INT IDENTITY(1,1) PRIMARY KEY,
+    cNombre VARCHAR(100) NOT NULL,
+    cApellido VARCHAR(100) NOT NULL,
+    cIdentificacion VARCHAR(20) NOT NULL CONSTRAINT UQ_Cliente_Identificacion UNIQUE,
+    cEmail VARCHAR(150) CONSTRAINT UQ_Cliente_Email UNIQUE,
+    cTelefono VARCHAR(20),
+    nEdad INT CONSTRAINT CHK_Cliente_Edad CHECK (nEdad >= 18),
+    dFechaRegistro DATE CONSTRAINT DEF_Cliente_Fecha DEFAULT GETDATE(),
+    bActivo BIT CONSTRAINT DEF_Cliente_Activo DEFAULT 1
+);
+GO
+
+-- 82. Crear una tabla TVenta relacionada con TCliente.
+CREATE TABLE TVenta (
+    nVentaID INT IDENTITY(1,1) PRIMARY KEY,
+    nClienteID INT NOT NULL,
+    nSucursalID INT NOT NULL,
+    dFechaVenta DATE NOT NULL,
+    nMontoTotal DECIMAL(12,2) NOT NULL CONSTRAINT CHK_Venta_Monto CHECK (nMontoTotal >= 0),
+    cEstado VARCHAR(20) CONSTRAINT DEF_Venta_Estado DEFAULT 'Completado',
+    CONSTRAINT FK_TVenta_Cliente FOREIGN KEY (nClienteID) REFERENCES TCliente(nClienteID),
+    CONSTRAINT FK_TVenta_Sucursal FOREIGN KEY (nSucursalID) REFERENCES TSucursal(nSucursalID)
+);
+GO
+
+-- 83. Registrar 20 clientes.
+INSERT INTO TCliente (cNombre, cApellido, cIdentificacion, cEmail, cTelefono, nEdad) VALUES
+('Juan', 'Perez', '001-010190-0001A', 'juan.perez@mail.com', '8888-1111', 35),
+('Maria', 'Lopez', '001-020292-0002B', 'maria.lopez@mail.com', '8888-2222', 28),
+('Pedro', 'Torres', '001-030388-0003C', 'pedro.torres@mail.com', '8888-3333', 42),
+('Ana', 'Castro', '001-040495-0004D', 'ana.castro@mail.com', '8888-4444', 31),
+('Luis', 'Mendoza', '001-050591-0005E', 'luis.mendoza@mail.com', '8888-5454', 33),
+('Sofia', 'Reyes', '001-060694-0006F', 'sofia.reyes@mail.com', '8888-6666', 26),
+('Carlos', 'Sosa', '001-070785-0007G', 'carlos.sosa@mail.com', '8888-7777', 40),
+('Elena', 'Gaitan', '001-080893-0008H', 'elena.gaitan@mail.com', '8888-8888', 30),
+('Jorge', 'Blandon', '001-090989-0009I', 'jorge.blandon@mail.com', '8888-9999', 37),
+('Lucia', 'Herrera', '001-101096-0010J', 'lucia.herrera@mail.com', '8888-1234', 25),
+('Andres', 'Espinoza', '001-111184-0011K', 'andres.es@mail.com', '8888-5678', 41),
+('Diana', 'Valle', '001-121297-0012L', 'diana.valle@mail.com', '8888-9012', 24),
+('Ricardo', 'Arce', '001-131383-0013M', 'ricardo.arce@mail.com', '8888-3456', 43),
+('Gabriela', 'Mejia', '001-141490-0014N', 'gabriela.m@mail.com', '8888-7890', 36),
+('Roberto', 'Silva', '001-151587-0015O', 'roberto.silva@mail.com', '8888-2345', 39),
+('Vanessa', 'Luna', '001-161695-0016P', 'vanessa.luna@mail.com', '8888-6789', 29),
+('Manuel', 'Rizo', '001-171782-0017Q', 'manuel.rizo@mail.com', '8888-0123', 44),
+('Tatiana', 'Cruz', '001-181894-0018R', 'tatiana.cruz@mail.com', '8888-4567', 32),
+('Francisco', 'Duarte', '001-191986-0019S', 'fran.duarte@mail.com', '8888-8901', 38),
+('Sonia', 'Pastora', '001-202091-0020T', 'sonia.p@mail.com', '8888-2468', 34),
+-- Clientes extras sin compras para el paso 86:
+('Cliente', 'SinCompra1', '001-212199-0021U', 'test1@mail.com', '8888-1357', 27),
+('Cliente', 'SinCompra2', '001-222299-0022V', 'test2@mail.com', '8888-2460', 27);
+GO
+
+-- 84. Registrar 50 ventas.
+INSERT INTO TVenta (nClienteID, nSucursalID, dFechaVenta, nMontoTotal) VALUES
+(1, 1, '2026-01-10', 150.00), (2, 1, '2026-01-15', 2500.00), (3, 2, '2026-01-20', 340.00), (4, 3, '2026-01-25', 120.00), (5, 2, '2026-01-28', 850.00),
+(6, 1, '2026-02-02', 95.00), (7, 3, '2026-02-14', 1100.00), (8, 2, '2026-02-18', 420.00), (9, 1, '2026-02-22', 2150.00), (10, 3, '2026-02-27', 60.00),
+(11, 2, '2026-03-03', 1300.00), (12, 1, '2026-03-08', 500.00), (13, 3, '2026-03-12', 75.00), (14, 2, '2026-03-19', 2400.00), (15, 1, '2026-03-25', 180.00),
+(16, 3, '2026-04-02', 950.00), (17, 2, '2026-04-09', 310.00), (18, 1, '2026-04-15', 1250.00), (19, 3, '2026-04-22', 415.00), (20, 1, '2026-04-29', 90.00),
+(1, 2, '2026-05-05', 600.00), (2, 3, '2026-05-12', 150.00), (3, 1, '2026-05-18', 2200.00), (4, 2, '2026-05-24', 80.00), (5, 3, '2026-05-30', 710.00),
+(6, 2, '2026-01-12', 540.00), (7, 1, '2026-02-15', 300.00), (8, 3, '2026-03-20', 125.00), (9, 2, '2026-04-25', 990.00), (10, 1, '2026-05-02', 115.00),
+(11, 3, '2026-01-22', 800.00), (12, 2, '2026-02-28', 450.00), (13, 1, '2026-03-15', 1600.00), (14, 3, '2026-04-10', 220.00), (15, 2, '2026-05-14', 75.00),
+(16, 1, '2026-01-05', 135.00), (17, 3, '2026-02-10', 670.00), (18, 2, '2026-03-22', 3000.00), (19, 1, '2026-04-18', 105.00), (20, 3, '2026-05-26', 850.00),
+(1, 3, '2026-02-20', 450.00), (2, 2, '2026-03-14', 190.00), (3, 3, '2026-04-05', 730.00), (4, 1, '2026-05-11', 1200.00), (5, 1, '2026-03-01', 310.00),
+(6, 3, '2026-04-12', 400.00), (7, 2, '2026-05-19', 85.00), (8, 1, '2026-01-30', 950.00), (9, 3, '2026-02-25', 160.00), (10, 2, '2026-03-11', 520.00);
+GO
+
+-- 85. Actualizar precios o montos de ventas según una condición.
+UPDATE TVenta
+SET nMontoTotal = nMontoTotal * 0.95
+WHERE nMontoTotal > 2000;
+GO
+
+-- 86. Eliminar clientes sin ventas.
+-- Removerá los dos clientes de prueba que agregamos con IDs 21 y 22.
+DELETE FROM TCliente
+WHERE nClienteID NOT IN (SELECT DISTINCT nClienteID FROM TVenta);
+GO
+
+-- 87. Consultar los 5 clientes con mayores compras.
+SELECT TOP 5 C.nClienteID, C.cNombre, C.cApellido, SUM(V.nMontoTotal) AS TotalComprado
+FROM TCliente C
+INNER JOIN TVenta V ON C.nClienteID = V.nClienteID
+GROUP BY C.nClienteID, C.cNombre, C.cApellido
+ORDER BY TotalComprado DESC;
+GO
+
+-- 88. Consultar ventas por mes.
+SELECT YEAR(dFechaVenta) AS Anio, MONTH(dFechaVenta) AS Mes, SUM(nMontoTotal) AS TotalMontoMes, COUNT(nVentaID) AS Transacciones
+FROM TVenta
+GROUP BY YEAR(dFechaVenta), MONTH(dFechaVenta)
+ORDER BY Anio, Mes;
+GO
+
+-- 89. Consultar promedio de ventas por cliente.
+SELECT C.nClienteID, C.cNombre, C.cApellido, AVG(V.nMontoTotal) AS PromedioPorCompra
+FROM TCliente C
+INNER JOIN TVenta V ON C.nClienteID = V.nClienteID
+GROUP BY C.nClienteID, C.cNombre, C.cApellido;
+GO
+
+-- 90. Generar un reporte consolidado utilizando JOIN entre tres tablas.
+SELECT V.nVentaID, 
+       (C.cNombre + ' ' + C.cApellido) AS NombreCliente, 
+       S.cNombreSucursal AS SucursalDeVenta, 
+       V.dFechaVenta, 
+       V.nMontoTotal AS MontoFinal Pagado
+FROM TVenta V
+INNER JOIN TCliente C ON V.nClienteID = C.nClienteID
+INNER JOIN TSucursal S ON V.nSucursalID = S.nSucursalID;
+GO

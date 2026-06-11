@@ -343,3 +343,104 @@ WHERE nDepartamentoID NOT IN (
     WHERE nDepartamentoID IS NOT NULL
 );
 GO
+
+-- 54. Mostrar todos los empleados ordenados por apellido.
+SELECT * FROM TEmpleado 
+ORDER BY cApellido ASC;
+GO
+
+-- 55. Mostrar empleados con salario mayor a 1,000.
+SELECT * FROM TEmpleado 
+WHERE nSalario > 1000;
+GO
+
+-- 56. Mostrar empleados activos.
+SELECT * FROM TEmpleado 
+WHERE bActivo = 1;
+GO
+
+-- 57. Mostrar empleados contratados durante el año actual.
+SELECT * FROM TEmpleado 
+WHERE YEAR(dFechaContratacion) = YEAR(GETDATE());
+GO
+
+-- 58. Mostrar empleados y el nombre de su departamento.
+SELECT E.nEmpleadoID, E.cNombre, E.cApellido, D.cNombreDepartamento
+FROM TEmpleado E
+INNER JOIN TDepartamento D ON E.nDepartamentoID = D.nDepartamentoID;
+GO
+
+-- 59. Mostrar empleados y el nombre de su cargo.
+SELECT E.nEmpleadoID, E.cNombre, E.cApellido, C.cNombreCargo
+FROM TEmpleado E
+INNER JOIN TCargo C ON E.nCargoID = C.nCargoID;
+GO
+
+-- 60. Mostrar empleados asignados a proyectos.
+SELECT DISTINCT E.nEmpleadoID, E.cNombre, E.cApellido
+FROM TEmpleado E
+INNER JOIN TEmpleadoProyecto EP ON E.nEmpleadoID = EP.nEmpleadoID;
+GO
+
+-- 61. Mostrar cantidad de empleados por departamento.
+SELECT D.cNombreDepartamento, COUNT(E.nEmpleadoID) AS TotalEmpleados
+FROM TDepartamento D
+LEFT JOIN TEmpleado E ON D.nDepartamentoID = E.nDepartamentoID
+GROUP BY D.cNombreDepartamento;
+GO
+
+-- 62. Mostrar salario promedio por departamento.
+SELECT D.cNombreDepartamento, AVG(E.nSalario) AS SalarioPromedio
+FROM TDepartamento D
+INNER JOIN TEmpleado E ON D.nDepartamentoID = E.nDepartamentoID
+GROUP BY D.cNombreDepartamento;
+GO
+
+-- 63. Mostrar salario máximo y mínimo por departamento.
+SELECT D.cNombreDepartamento, 
+       MAX(E.nSalario) AS SalarioMaximo, 
+       MIN(E.nSalario) AS SalarioMinimo
+FROM TDepartamento D
+INNER JOIN TEmpleado E ON D.nDepartamentoID = E.nDepartamentoID
+GROUP BY D.cNombreDepartamento;
+GO
+
+-- 64. Mostrar los proyectos con más de dos empleados asignados.
+SELECT P.cNombreProyecto, COUNT(EP.nEmpleadoID) AS EmpleadosAsignados
+FROM TProyecto P
+INNER JOIN TEmpleadoProyecto EP ON P.nProyectoID = EP.nProyectoID
+GROUP BY P.cNombreProyecto
+HAVING COUNT(EP.nEmpleadoID) > 2;
+GO
+
+-- 65. Mostrar empleados cuyo apellido inicia con "G".
+SELECT * FROM TEmpleado 
+WHERE cApellido LIKE 'G%';
+GO
+
+-- 66. Mostrar empleados ordenados por salario descendente.
+SELECT * FROM TEmpleado 
+ORDER BY nSalario DESC;
+GO
+
+-- 67. Mostrar los tres salarios más altos.
+SELECT TOP 3 nSalario, cNombre, cApellido 
+FROM TEmpleado 
+ORDER BY nSalario DESC;
+GO
+
+-- 68. Mostrar empleados con edad entre 25 y 40 años.
+SELECT * FROM TEmpleado 
+WHERE nEdad BETWEEN 25 AND 40;
+GO
+
+-- 69. Mostrar cantidad total de empleados activos.
+SELECT COUNT(*) AS CantidadEmpleadosActivos 
+FROM TEmpleado 
+WHERE bActivo = 1;
+GO
+
+-- 70. Mostrar el total de proyectos registrados.
+SELECT COUNT(*) AS TotalProyectosRegistrados 
+FROM TProyecto;
+GO

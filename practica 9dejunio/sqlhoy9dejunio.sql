@@ -444,3 +444,52 @@ GO
 SELECT COUNT(*) AS TotalProyectosRegistrados 
 FROM TProyecto;
 GO
+
+-- 71. Eliminar la restricción CHECK de edad.
+ALTER TABLE TEmpleado 
+DROP CONSTRAINT CHK_Edad;
+GO
+
+-- 72. Eliminar la restricción UNIQUE del correo.
+ALTER TABLE TEmpleado 
+DROP CONSTRAINT UQ_Email;
+GO
+
+-- 73. Agregar nuevamente ambas restricciones.
+ALTER TABLE TEmpleado 
+ADD CONSTRAINT CHK_Edad CHECK (nEdad BETWEEN 18 AND 65);
+
+ALTER TABLE TEmpleado 
+ADD CONSTRAINT UQ_Email UNIQUE (cEmail);
+GO
+
+-- 74. Eliminar la tabla TEmpleadoProyecto.
+DROP TABLE TEmpleadoProyecto;
+GO
+
+-- 75. Eliminar la tabla TProyecto.
+DROP TABLE TProyecto;
+GO
+
+-- 76. Eliminar la tabla TEmpleado.
+DROP TABLE TEmpleado;
+GO
+
+-- 77. Eliminar la tabla TCargo.
+DROP TABLE TCargo;
+GO
+
+-- 78. Eliminar la tabla TDepartamento.
+DROP TABLE TDepartamento;
+GO
+
+-- 79. Eliminar la tabla TSucursal.
+DROP TABLE TSucursal;
+GO
+
+USE master;
+GO
+
+ALTER DATABASE EmpresaSQL SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+DROP DATABASE EmpresaSQL;
+GO

@@ -1,3 +1,12 @@
+
+USE master;
+GO
+IF EXISTS (SELECT * FROM sys.databases WHERE name = 'EmpresaSQL')
+BEGIN
+    ALTER DATABASE EmpresaSQL SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE EmpresaSQL;
+    END
+GO
 -- 1. Crear una base de datos llamada EmpresaSQL.
 CREATE DATABASE EmpresaSQL;
 GO
@@ -170,4 +179,91 @@ CREATE TABLE TSucursal (
     nSucursalID INT IDENTITY(1,1) PRIMARY KEY,
     cNombreSucursal VARCHAR(100) NOT NULL
 );
+GO
+
+-- 31. Insertar 5 departamentos diferentes.
+INSERT INTO TDepartamento (cNombreDepartamento) 
+VALUES 
+('Recursos Humanos'), 
+('Tecnología'), 
+('Ventas'), 
+('Marketing'), 
+('Finanzas');
+GO
+
+-- 32. Insertar 5 cargos diferentes.
+INSERT INTO TCargo (cNombreCargo) 
+VALUES 
+('Gerente'), 
+('Desarrollador Senior'), 
+('Analista de Datos'), 
+('Especialista de Marketing'), 
+('Contador');
+GO
+
+-- 33. Insertar 10 empleados.
+-- Se asume que los IDs de departamento y cargo van del 1 al 5 por las inserciones anteriores.
+INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, dFechaContratacion, nSalario, cEmail, cTelefono, nEdad, bActivo, cGenero, dFechaNacimiento)
+VALUES 
+('11111111A', 'Carlos', 'Ruiz', 1, 1, '2022-01-15', 1500.00, 'carlos.r@empresa.com', '555-0001', 45, 1, 'M', '1978-05-20'),
+('22222222B', 'Lucia', 'Gomez', 2, 2, '2023-03-10', 1800.50, 'lucia.g@empresa.com', '555-0002', 32, 1, 'F', '1991-08-14'),
+('33333333C', 'Miguel', 'Fernandez', 2, 3, '2023-06-01', 1200.00, 'miguel.f@empresa.com', '555-0003', 28, 1, 'M', '1995-11-02'),
+('44444444D', 'Ana', 'Martinez', 3, 1, '2021-11-20', 1600.00, 'ana.m@empresa.com', '555-0004', 38, 1, 'F', '1985-02-25'),
+('55555555E', 'Jorge', 'Lopez', 3, 3, '2022-08-15', 900.00, 'jorge.l@empresa.com', '555-0005', 25, 1, 'M', '1998-07-19'),
+('66666666F', 'Laura', 'Diaz', 4, 4, '2023-01-10', 1100.00, 'laura.d@empresa.com', '555-0006', 29, 1, 'F', '1994-12-05'),
+('77777777G', 'Pedro', 'Sanchez', 5, 5, '2020-05-18', 1400.00, 'pedro.s@empresa.com', '555-0007', 50, 1, 'M', '1973-04-10'),
+('88888888H', 'Sofia', 'Romero', 4, 4, '2023-09-01', 1050.00, 'sofia.r@empresa.com', '555-0008', 26, 1, 'F', '1997-09-22'),
+('99999999I', 'David', 'Alvarez', 2, 2, '2021-02-28', 1750.00, 'david.a@empresa.com', '555-0009', 35, 1, 'M', '1988-06-30'),
+('00000000J', 'Elena', 'Torres', 1, 3, '2022-10-12', 950.00, 'elena.t@empresa.com', '555-0010', 40, 1, 'F', '1983-01-15');
+GO
+
+-- 34. Insertar 3 proyectos.
+INSERT INTO TProyecto (cNombreProyecto, dFechaInicio, dFechaFinalizacion)
+VALUES 
+('Sistema de Gestión ERP', '2023-01-01', '2023-12-31'),
+('Campaña Redes Sociales Q3', '2023-07-01', '2023-09-30'),
+('Migración a la Nube', '2023-05-15', NULL); -- Proyecto aún no finalizado
+GO
+
+-- 35. Asignar empleados a proyectos (En la tabla intermedia TEmpleadoProyecto).
+-- Asignaremos algunos empleados a los proyectos usando sus IDs
+INSERT INTO TEmpleadoProyecto (nEmpleadoID, nProyectoID)
+VALUES 
+(2, 1), -- Lucia (Desarrolladora) al ERP
+(3, 1), -- Miguel (Analista) al ERP
+(9, 3), -- David (Desarrollador) a Migración
+(6, 2), -- Laura (Marketing) a Campaña
+(8, 2); -- Sofia (Marketing) a Campaña
+GO
+
+-- 36. Insertar un empleado utilizando el valor por defecto de fecha (dFechaContratacion).
+-- Al omitir la columna "dFechaContratacion" en el INSERT, el motor aplica el DEFAULT GETDATE() que creamos en el paso 7.
+INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nSalario, nEdad, cGenero)
+VALUES ('12345678X', 'Roberto', 'Mendez', 800.00, 30, 'M');
+GO
+
+-- 37. Insertar un empleado con correo electrónico.
+INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nSalario, nEdad, cGenero, cEmail)
+VALUES ('87654321Y', 'Carmen', 'Vargas', 850.00, 27, 'F', 'carmen.v@empresa.com');
+GO
+
+-- 38. Insertar un empleado sin indicar estado activo.
+-- Al omitir la columna "bActivo", aplicará la restricción DEFAULT 1 (paso 24).
+INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nSalario, nEdad, cGenero, cEmail)
+VALUES ('11223344Z', 'Hugo', 'Pinto', 750.00, 22, 'M', 'hugo.p@empresa.com');
+GO
+
+-- 39. Insertar registros usando múltiples VALUES.
+-- Para este ejemplo, insertaremos varias sucursales en la tabla TSucursal creada en el paso 30, en una sola sentencia.
+INSERT INTO TSucursal (cNombreSucursal)
+VALUES 
+('Sucursal Central - Managua'),
+('Sucursal Norte - Estelí'),
+('Sucursal Sur - Rivas');
+GO
+
+-- 40. Intentar insertar un salario negativo y analizar el error.
+-- Esto generará un ERROR INTENCIONAL debido a la restricción CHECK (nSalario > 300) creada en el paso 6.
+INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nSalario, nEdad, cGenero)
+VALUES ('99887766W', 'Error', 'Humano', -150.00, 25, 'M');
 GO

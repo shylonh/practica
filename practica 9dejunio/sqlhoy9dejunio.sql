@@ -267,3 +267,50 @@ GO
 INSERT INTO TEmpleado (cNIF, cNombre, cApellido, nSalario, nEdad, cGenero)
 VALUES ('99887766W', 'Error', 'Humano', -150.00, 25, 'M');
 GO
+
+
+-- 41. Incrementar en 10% el salario de todos los empleados.
+UPDATE TEmpleado 
+SET nSalario = nSalario * 1.10;
+GO
+
+-- 42. Incrementar en 20% el salario de los empleados de un departamento específico.
+UPDATE TEmpleado 
+SET nSalario = nSalario * 1.20 
+WHERE nDepartamentoID = 2;
+GO
+
+-- 43. Actualizar el correo electrónico de un empleado..
+UPDATE TEmpleado 
+SET cEmail = 'carlos.nuevo@empresa.com' 
+WHERE nEmpleadoID = 1;
+GO
+
+-- 44. Modificar el cargo de un empleado.
+UPDATE TEmpleado 
+SET nCargoID = 1 
+WHERE nEmpleadoID = 3;
+GO
+
+-- 45. Cambiar el departamento de dos empleados.
+UPDATE TEmpleado 
+SET nDepartamentoID = 5 
+WHERE nEmpleadoID IN (4, 5);
+GO
+
+-- 46. Marcar como inactivos a los empleados con salario inferior a 500.
+UPDATE TEmpleado 
+SET bActivo = 0 
+WHERE nSalario < 500;
+GO
+
+-- 47. Actualizar la fecha de finalización de un proyecto.
+UPDATE TProyecto 
+SET dFechaFinalizacion = '2024-02-10' 
+WHERE nProyectoID = 3;
+GO
+
+-- 48. Asignar un nuevo proyecto a un empleado.
+INSERT INTO TEmpleadoProyecto (nEmpleadoID, nProyectoID) 
+VALUES (1, 3);
+GO
